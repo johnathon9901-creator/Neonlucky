@@ -110,6 +110,37 @@
       text-decoration: none;
     }
 
+    .ad-banner {
+      margin: 20px auto;
+      max-width: 100%;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,140,0,0.3);
+      border-radius: 12px;
+      padding: 10px;
+      box-shadow: 0 0 15px rgba(255,140,0,0.2);
+    }
+
+    .banner-image {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 8px;
+      display: block;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .banner-image:hover {
+      transform: scale(1.02);
+    }
+
+    .ad-disclaimer {
+      font-size: 11px;
+      opacity: 0.6;
+      margin: 8px 0 0 0;
+      color: #b8b8ff;
+    }
+
     @keyframes spin {
       0% { transform: translateY(-100%); }
       100% { transform: translateY(100%); }
@@ -123,6 +154,14 @@
 <body>
 
   <h1>🎰 Neon Slots</h1>
+
+  <!-- Cowboy789 Banner Ad -->
+  <div class="ad-banner">
+    <a href="https://cowboy789.com/?invite_code=25778525" target="_blank" rel="noopener noreferrer">
+      <img src="assets/cowboy789_banner.png" alt="Cowboy789 - Play Now" class="banner-image">
+    </a>
+    <p class="ad-disclaimer">Advertisement | 21+ Only | Gamble Responsibly</p>
+  </div>
 
   <div class="balance-container">
     💰 Balance: <span id="balance">0</span>
