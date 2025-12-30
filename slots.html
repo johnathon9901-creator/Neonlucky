@@ -1,22 +1,222 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>NeonLucky Slots</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background: radial-gradient(circle at top, #1a1a40, #070711);
+      color: #ffffff;
+      font-family: 'Inter', sans-serif;
+      text-align: center;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 36px;
+      margin-top: 20px;
+      color: #7f5af0;
+      text-shadow: 0 0 12px #7f5af0;
+    }
+
+    .balance-container {
+      background: rgba(255,255,255,0.05);
+      padding: 10px 20px;
+      border-radius: 20px;
+      border: 1px solid rgba(127,90,240,0.3);
+      margin-bottom: 20px;
+    }
+
+    .slot-machine {
+      background: #16161e;
+      border: 4px solid #7f5af0;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 0 30px rgba(127,90,240,0.4);
+      display: inline-block;
+      margin-bottom: 30px;
+    }
+
+    .reels {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .reel {
+      width: 80px;
+      height: 120px;
+      background: #1a1a24;
+      border: 2px solid rgba(127,90,240,0.2);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 50px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .reel-content {
+      position: absolute;
+      transition: transform 0.1s ease-out;
+    }
+
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+      max-width: 200px;
+    }
+
+    button {
+      background: linear-gradient(135deg, #7f5af0, #5a3df0);
+      border: none;
+      color: white;
+      padding: 15px;
+      font-size: 20px;
+      font-weight: bold;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(127,90,240,0.6);
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    button:disabled {
+      background: #444;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    .message {
+      margin-top: 20px;
+      font-weight: bold;
+      height: 24px;
+      color: #2cb67d;
+    }
+
+    .back-link {
+      margin-top: auto;
+      margin-bottom: 30px;
+      color: #7f5af0;
+      text-decoration: none;
+    }
+
+    @keyframes spin {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(100%); }
+    }
+
+    .spinning {
+      animation: spin 0.1s linear infinite;
+    }
+  </style>
 </head>
-<body style="background:#0b0b16;color:white;text-align:center;">
+<body>
 
-<h1>🎰 Slots</h1>
-<p>Virtual coins only</p>
+  <h1>🎰 Neon Slots</h1>
 
-<iframe 
-  src="https://plays.org/game/slot-machine/"
-  width="100%" 
-  height="600"
-  style="border:none;">
-</iframe>
+  <div class="balance-container">
+    💰 Balance: <span id="balance">0</span>
+  </div>
 
-<p><a href="index.html" style="color:#7f5af0;">⬅ Back</a></p>
+  <div class="slot-machine">
+    <div class="reels">
+      <div class="reel" id="reel1">🍒</div>
+      <div class="reel" id="reel2">🍒</div>
+      <div class="reel" id="reel3">🍒</div>
+    </div>
+
+    <div class="controls">
+      <button id="spinBtn">SPIN (100)</button>
+    </div>
+
+    <div class="message" id="message"></div>
+  </div>
+
+  <a href="index.html" class="back-link">⬅ Back to Lobby</a>
+
+  <script>
+    const symbols = ['🍒', '🍋', '🔔', '💎', '🎰', '⭐'];
+    const reelEls = [
+      document.getElementById('reel1'),
+      document.getElementById('reel2'),
+      document.getElementById('reel3')
+    ];
+    const spinBtn = document.getElementById('spinBtn');
+    const balanceEl = document.getElementById('balance');
+    const messageEl = document.getElementById('message');
+
+    let balance = parseInt(localStorage.getItem('neonlucky_balance')) || 0;
+    balanceEl.textContent = balance.toLocaleString();
+
+    function updateBalance(amount) {
+      balance += amount;
+      localStorage.setItem('neonlucky_balance', balance);
+      balanceEl.textContent = balance.toLocaleString();
+    }
+
+    spinBtn.onclick = () => {
+      if (balance < 100) {
+        alert("Not enough coins! Collect your daily bonus.");
+        return;
+      }
+
+      updateBalance(-100);
+      spinBtn.disabled = true;
+      messageEl.textContent = "";
+
+      // Start spinning animation
+      reelEls.forEach(reel => reel.classList.add('spinning'));
+
+      setTimeout(() => {
+        const results = [];
+        reelEls.forEach((reel, i) => {
+          setTimeout(() => {
+            reel.classList.remove('spinning');
+            const symbol = symbols[Math.floor(Math.random() * symbols.length)];
+            reel.textContent = symbol;
+            results.push(symbol);
+
+            if (results.length === 3) {
+              checkWin(results);
+              spinBtn.disabled = false;
+            }
+          }, i * 400);
+        });
+      }, 1000);
+    };
+
+    function checkWin(results) {
+      if (results[0] === results[1] && results[1] === results[2]) {
+        let win = 0;
+        const symbol = results[0];
+        if (symbol === '🎰') win = 5000;
+        else if (symbol === '💎') win = 2000;
+        else if (symbol === '⭐') win = 1000;
+        else win = 500;
+
+        updateBalance(win);
+        messageEl.textContent = `WINNER! +${win} coins! 🏆`;
+        messageEl.style.color = "#2cb67d";
+      } else if (results[0] === results[1] || results[1] === results[2] || results[0] === results[2]) {
+        updateBalance(150);
+        messageEl.textContent = "Small Win! +150 coins";
+        messageEl.style.color = "#7f5af0";
+      } else {
+        messageEl.textContent = "Try again!";
+        messageEl.style.color = "#ef4565";
+      }
+    }
+  </script>
 
 </body>
 </html>
