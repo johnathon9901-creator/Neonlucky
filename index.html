@@ -1,55 +1,108 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>NeonLucky Casino</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter&display=swap" rel="stylesheet">
+
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0b0b16;
-      color: white;
+      background: radial-gradient(circle at top, #1a1a40, #070711);
+      color: #ffffff;
+      font-family: 'Inter', sans-serif;
       text-align: center;
     }
-    button {
-      background: #7f5af0;
-      color: white;
-      border: none;
-      padding: 15px 25px;
-      font-size: 18px;
-      border-radius: 8px;
-      cursor: pointer;
+
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 42px;
+      margin-top: 30px;
+      color: #7f5af0;
+      text-shadow: 0 0 12px #7f5af0;
     }
-    .card {
-      background: #16162a;
+
+    .tagline {
+      color: #b8b8ff;
+      margin-bottom: 25px;
+    }
+
+    .container {
       padding: 20px;
-      margin: 15px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(127,90,240,0.3);
+      border-radius: 18px;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 360px;
+      box-shadow: 0 0 20px rgba(127,90,240,0.15);
+    }
+
+    button {
+      width: 100%;
+      background: linear-gradient(135deg, #7f5af0, #5a3df0);
+      border: none;
+      color: white;
+      padding: 16px;
+      font-size: 18px;
       border-radius: 12px;
+      cursor: pointer;
+      margin-top: 10px;
+      box-shadow: 0 0 15px rgba(127,90,240,0.6);
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .footer {
+      font-size: 12px;
+      opacity: 0.7;
+      margin: 30px 10px;
+    }
+
+    a {
+      color: #7f5af0;
+      text-decoration: none;
     }
   </style>
 </head>
+
 <body>
 
-<h1>🎰 NeonLucky</h1>
-<p>Vegas vibes. Zero cash risk.</p>
+  <h1>🎰 NeonLucky</h1>
+  <p class="tagline">Vegas vibes. Zero cash risk.</p>
 
-<div class="card">
-  <h2>💰 Free Coins</h2>
-  <p>You get 10,000 free coins every day.</p>
-  <button>Collect Daily Bonus</button>
-</div>
+  <div class="container">
 
-<div class="card">
-  <h2>🎲 Games</h2>
-  <p>Slots • Blackjack • Roulette</p>
-  <button>Play Now</button>
-</div>
+    <div class="card">
+      <h2>💰 Daily Free Coins</h2>
+      <p>Get 10,000 coins every day.</p>
+      <button onclick="alert('🎁 10,000 coins added!')">
+        Collect Bonus
+      </button>
+    </div>
 
-<div class="card">
-  <p style="font-size:12px;">
-    Entertainment only • 21+ • No real money gambling
-  </p>
-</div>
+    <div class="card">
+      <h2>🎲 Play Games</h2>
+      <p>Slots • Blackjack • Roulette</p>
+      <a href="slots.html">
+        <button>Play Now</button>
+      </a>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    Entertainment only • 21+ • No real money gambling<br>
+    <a href="terms.html">Terms & Legal</a>
+  </div>
 
 </body>
 </html>
